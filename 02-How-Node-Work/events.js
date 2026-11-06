@@ -1,0 +1,44 @@
+import events from "events";
+import http from "http";
+
+// const myEmitter = new events.EventEmitter();
+
+class Sale extends events.EventEmitter {
+  constructor() {
+    super();
+  }
+}
+
+const myEmitter = new Sale();
+
+myEmitter.on("newSale", () => {
+  console.log("There was a new sale!");
+});
+
+myEmitter.on("newSale", () => {
+  console.log("Customer name: Nayra");
+});
+
+myEmitter.on("newSale", (stock) => {
+  console.log(`There are now ${stock} items left in stock.`);
+});
+
+myEmitter.emit("newSale", 9);
+
+//////////////
+
+let server = http.createServer();
+
+server.on("request", (req, res) => {
+  console.log("Request received");
+  console.log(req.url);
+  res.end("Request received");
+});
+
+server.on("request", (req, res) => {
+  console.log("Another request received");
+});
+
+server.listen(8000, "127.0.0.1", () => {
+  console.log("Waiting for requests...");
+});
